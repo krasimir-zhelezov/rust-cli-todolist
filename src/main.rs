@@ -1,6 +1,8 @@
-use std::io;
+use std::{collections::HashMap, io};
 
 fn main() {
+    let mut tasks: Vec<HashMap<String, String>> = Vec::new();
+
     loop {
         let mut input = String::new();
 
@@ -13,12 +15,12 @@ fn main() {
         if input == "exit" {
             break;
         } else if input == "add" {
-            add_task();
+            add_task(tasks.as_mut());
         }
     }
 }
 
-fn add_task() {
+fn add_task(tasks: &mut Vec<HashMap<String, String>>) {
     println!("Name: ");
     let mut name = String::new();
     io::stdin()
@@ -36,5 +38,11 @@ fn add_task() {
 
     let description = description.trim();
 
-    println!("Task: {}", name);
+    let mut task = HashMap::new();
+
+    task.insert("name".to_string(), name.to_string());
+    task.insert("desc".to_string(), description.to_string());
+    task.insert("done".to_string(), false.to_string());
+
+    tasks.push(task);
 }
