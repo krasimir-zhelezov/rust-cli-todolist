@@ -1,4 +1,13 @@
+use std::io;
+
 fn main() {
-    let foo: i32 = 5;
-    println!("{}", foo);
+    let mut input = String::new();
+
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read line");
+
+    let input = input.trim();
+
+    println!("{}", input);
 }
