@@ -20,6 +20,8 @@ fn main() {
             view_tasks(tasks.as_mut());
         } else if input == "delete" {
             delete_task(tasks.as_mut());
+        } else if input == "complete" {
+            complete_task(tasks.as_mut());
         }
     }
 }
@@ -69,4 +71,14 @@ fn delete_task(tasks: &mut Vec<HashMap<String, String>>) {
     let id: usize = id.trim().parse().expect("Not a valid usize");
 
     tasks.remove(id);
+}
+
+fn complete_task(tasks: &mut Vec<HashMap<String, String>>) {
+    let mut id = String::new();
+    io::stdin()
+        .read_line(&mut id)
+        .expect("Failed to read line");
+
+    let id: usize = id.trim().parse().expect("Not a valid usize");
+    tasks[id].insert("done".to_string(), true.to_string());
 }
