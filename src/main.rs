@@ -1,4 +1,4 @@
-use std::{collections::HashMap, io};
+use std::{collections::HashMap, io::{self, Read}};
 
 fn main() {
     let mut tasks: Vec<HashMap<String, String>> = Vec::new();
@@ -18,6 +18,8 @@ fn main() {
             add_task(tasks.as_mut());
         } else if input == "view" {
             view_tasks(tasks.as_mut());
+        } else if input == "delete" {
+            delete_task(tasks.as_mut());
         }
     }
 }
@@ -56,4 +58,15 @@ fn view_tasks(tasks: &mut Vec<HashMap<String, String>>) {
         println!("description: {}", task.get("desc").unwrap());
         println!("done: {}", task.get("done").unwrap());
     }
+}
+
+fn delete_task(tasks: &mut Vec<HashMap<String, String>>) {
+    let mut id = String::new();
+    io::stdin()
+        .read_line(&mut id)
+        .expect("Failed to read line");
+
+    let id: usize = id.trim().parse().expect("Not a valid usize");
+
+    tasks.remove(id);
 }
