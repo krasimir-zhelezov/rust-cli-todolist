@@ -12,16 +12,13 @@ fn main() {
 
         let input = input.trim();
 
-        if input == "exit" {
-            break;
-        } else if input == "add" {
-            add_task(tasks.as_mut());
-        } else if input == "view" {
-            view_tasks(tasks.as_mut());
-        } else if input == "delete" {
-            delete_task(tasks.as_mut());
-        } else if input == "complete" {
-            complete_task(tasks.as_mut());
+        match input {
+            "exit" => break,
+            "add" => add_task(tasks.as_mut()),
+            "view" => view_tasks(tasks.as_mut()),
+            "delete" => delete_task(tasks.as_mut()),
+            "complete" => complete_task(tasks.as_mut()),
+            _ => println!("Uknown command"),
         }
     }
 }
