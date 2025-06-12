@@ -1,13 +1,17 @@
 use std::io;
 
 fn main() {
-    let mut input = String::new();
+    loop {
+        let mut input = String::new();
 
-    io::stdin()
-        .read_line(&mut input)
-        .expect("Failed to read line");
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
 
-    let input = input.trim();
+        let input = input.trim();
 
-    println!("{}", input);
+        if input == "exit" {
+            break;
+        }
+    }
 }
