@@ -16,6 +16,8 @@ fn main() {
             break;
         } else if input == "add" {
             add_task(tasks.as_mut());
+        } else if input == "view" {
+            view_tasks(tasks.as_mut());
         }
     }
 }
@@ -45,4 +47,13 @@ fn add_task(tasks: &mut Vec<HashMap<String, String>>) {
     task.insert("done".to_string(), false.to_string());
 
     tasks.push(task);
+}
+
+fn view_tasks(tasks: &mut Vec<HashMap<String, String>>) {
+    for (i, task) in tasks.iter().enumerate() {
+        println!("----- TASK #{} -----", i);
+        println!("name: {}", task.get("name").unwrap());
+        println!("description: {}", task.get("desc").unwrap());
+        println!("done: {}", task.get("done").unwrap());
+    }
 }
