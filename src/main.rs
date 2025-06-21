@@ -43,24 +43,11 @@ impl TaskManager {
         println!("{:#?}", self.tasks);
     }
 
-    fn complete_task(&mut self) {
-        let mut id = String::new();
-        io::stdin()
-            .read_line(&mut id)
-            .expect("Failed to read line");
-
-        let id: usize = id.trim().parse().expect("Not a valid usize");
+    fn complete_task(&mut self, id: usize) {
         self.tasks[id].done = true;
     }
 
-    fn delete_task(&mut self) {
-        let mut id = String::new();
-        io::stdin()
-            .read_line(&mut id)
-            .expect("Failed to read line");
-
-        let id: usize = id.trim().parse().expect("Not a valid usize");
-
+    fn delete_task(&mut self, id: usize) {
         self.tasks.remove(id);
     }
 }
@@ -78,12 +65,14 @@ fn main() {
 
         let input = input.trim();
 
-        match input {
+        let input: Vec<&str> = input.split(" ").collect();
+
+        match input[0] {
             "exit" => break,
             "add" => task_manager.add_task(),
             "view" => task_manager.view_tasks(),
-            "delete" => task_manager.delete_task(),
-            "complete" => task_manager.complete_task(),
+            "delete" => task_manager.delete_task(input[1].parse::<usize>().unwrap()),
+            "complete" => task_manager.complete_task(input[1].parse::<usize>().unwrap()),
             _ => println!("Uknown command"),
         }
     }
