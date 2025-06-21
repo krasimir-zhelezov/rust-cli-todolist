@@ -80,3 +80,6 @@ Tasks are stored as a ```Vec<HashMap<String, String>>``` where each task has:
 
 - Simple command-line interface
 
+
+## LICENSE
+This project is licensed under the MIT License (Non-Commercial).
