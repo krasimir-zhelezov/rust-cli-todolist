@@ -18,24 +18,11 @@ impl TaskManager {
         TaskManager { tasks: Vec::new() }
     }
 
-    fn add_task(&mut self) {
-        println!("Name: ");
-        let mut name = String::new();
-        io::stdin()
-            .read_line(&mut name)
-            .expect("Failed to read line");
-
-        println!("Description: ");
-
-        let mut description = String::new();
-        io::stdin()
-            .read_line(&mut description)
-            .expect("Failed to read line");
-
+    fn add_task(&mut self, name: String, description: String) {
         self.tasks.push(Task {
             id: Uuid::new_v4().to_string(),
-            name: name.trim().to_string(),
-            description: description.trim().to_string(),
+            name,
+            description,
             done: false
         });
     }
@@ -79,7 +66,7 @@ fn main() {
 
         match input[0] {
             "exit" => break,
-            "add" => task_manager.add_task(),
+            "add" => task_manager.add_task(input[1].to_string(), input[2].to_string()),
             "view" => task_manager.view_tasks(),
             "delete" => task_manager.delete_task(input[1].to_string()),
             "complete" => task_manager.complete_task(input[1].to_string()),
