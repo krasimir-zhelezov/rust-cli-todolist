@@ -70,7 +70,7 @@ fn main() {
             "view" => task_manager.view_tasks(),
             "delete" => task_manager.delete_task(input[1].to_string()),
             "complete" => task_manager.complete_task(input[1].to_string()),
-            _ => println!("Uknown command"),
+            _ => println!("Unknown command"),
         }
     }
 }
