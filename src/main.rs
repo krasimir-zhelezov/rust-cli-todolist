@@ -29,8 +29,7 @@ impl TaskManager {
             done: false
         });
 
-        let json = serde_json::to_string_pretty(&self.tasks).unwrap();
-        fs::write("tasks.json", json).expect("Unable to write file");
+        self.save_tasks();
     }
 
     fn view_tasks(&self) {
@@ -43,6 +42,7 @@ impl TaskManager {
                 task.done = true;
             }
         }
+        self.save_tasks();
     }
 
     fn delete_task(&mut self, id: String) {
@@ -52,6 +52,12 @@ impl TaskManager {
                 break;
             }
         }
+        self.save_tasks();
+    }
+
+    fn save_tasks(&self) {
+        let json = serde_json::to_string_pretty(&self.tasks).unwrap();
+        fs::write("tasks.json", json).expect("Unable to write file");
     }
 }
 
