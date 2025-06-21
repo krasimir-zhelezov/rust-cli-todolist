@@ -16,7 +16,9 @@ struct TaskManager {
 
 impl TaskManager {
     fn new() -> Self {
-        TaskManager { tasks: Vec::new() }
+        let json = fs::read_to_string("tasks.json").expect("Unable to read file");
+
+        TaskManager { tasks: serde_json::from_str(&json).unwrap() }
     }
 
     fn add_task(&mut self, name: String, description: String) {
