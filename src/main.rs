@@ -1,7 +1,8 @@
-use std::{collections::HashMap, io::{self, Read}};
+use std::{collections::HashMap, fs, io::{self, Read}};
+use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 struct Task {
     id: String,
     name: String,
@@ -25,6 +26,9 @@ impl TaskManager {
             description,
             done: false
         });
+
+        let json = serde_json::to_string_pretty(&self.tasks).unwrap();
+        fs::write("tasks.json", json).expect("Unable to write file");
     }
 
     fn view_tasks(&self) {
