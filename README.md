@@ -12,10 +12,10 @@ A simple command-line task manager written in Rust.
 
 ## Commands
 
-- `add` - Add a new task
+- `add {name} {description}` - Add a new task
 - `view` - View all tasks
-- `delete` - Delete a task (prompts for task ID)
-- `complete` - Mark a task as complete (prompts for task ID)
+- `delete {id}` - Delete a task (prompts for task ID)
+- `complete {id}` - Mark a task as complete (prompts for task ID)
 - `exit` - Exit the application
 
 ## How to Run
@@ -28,7 +28,7 @@ A simple command-line task manager written in Rust.
 cargo run
 ```
 
-## Usage Example
+## Usage Example [OLD]
 ```sh
 > add
 Name: Buy groceries
@@ -74,7 +74,7 @@ Tasks are stored as a ```Vec<HashMap<String, String>>``` where each task has:
 - done - Completion status (true/false)
 
 ## Limitations
-- No persistent storage (tasks are lost when program exits)
+- ~~No persistent storage (tasks are lost when program exits)~~
 
 - Basic error handling
 
