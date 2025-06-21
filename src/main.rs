@@ -1,8 +1,9 @@
 use std::{collections::HashMap, io::{self, Read}};
+use uuid::Uuid;
 
 #[derive(Debug)]
 struct Task {
-    id: usize,
+    id: String,
     name: String,
     description: String,
     done: bool
@@ -32,7 +33,7 @@ impl TaskManager {
             .expect("Failed to read line");
 
         self.tasks.push(Task {
-            id: self.tasks.len(),
+            id: Uuid::new_v4().to_string(),
             name: name.trim().to_string(),
             description: description.trim().to_string(),
             done: false
@@ -43,12 +44,21 @@ impl TaskManager {
         println!("{:#?}", self.tasks);
     }
 
-    fn complete_task(&mut self, id: usize) {
-        self.tasks[id].done = true;
+    fn complete_task(&mut self, id: String) {
+        for task in &mut self.tasks {
+            if task.id == id {
+                task.done = true;
+            }
+        }
     }
 
-    fn delete_task(&mut self, id: usize) {
-        self.tasks.remove(id);
+    fn delete_task(&mut self, id: String) {
+        for i in 0..self.tasks.len() {
+            if self.tasks[i].id == id {
+                self.tasks.remove(i);
+                break;
+            }
+        }
     }
 }
 
@@ -71,8 +81,8 @@ fn main() {
             "exit" => break,
             "add" => task_manager.add_task(),
             "view" => task_manager.view_tasks(),
-            "delete" => task_manager.delete_task(input[1].parse::<usize>().unwrap()),
-            "complete" => task_manager.complete_task(input[1].parse::<usize>().unwrap()),
+            "delete" => task_manager.delete_task(input[1].to_string()),
+            "complete" => task_manager.complete_task(input[1].to_string()),
             _ => println!("Uknown command"),
         }
     }
