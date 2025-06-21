@@ -335,6 +335,7 @@ dependencies = [
  "iana-time-zone",
  "js-sys",
  "num-traits",
+ "serde",
  "wasm-bindgen",
  "windows-link",
 ]
@@ -372,6 +373,7 @@ name = "cli-todo-list"
 version = "0.1.0"
 dependencies = [
  "cargo-watch",
+ "chrono",
  "serde",
  "serde_json",
  "uuid",

@@ -1,4 +1,5 @@
-use std::{collections::HashMap, fs, io::{self, Read}};
+use std::{fs, io::{self}};
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
@@ -7,7 +8,8 @@ struct Task {
     id: String,
     name: String,
     description: String,
-    done: bool
+    done: bool,
+    timestamp: DateTime<Utc>
 }
 
 struct TaskManager {
@@ -16,7 +18,10 @@ struct TaskManager {
 
 impl TaskManager {
     fn new() -> Self {
-        let json = fs::read_to_string("tasks.json").expect("Unable to read file");
+        let json = match fs::read_to_string("tasks.json") {
+            Ok(content) => content,
+            Err(_) => String::from("[]")
+        };
 
         TaskManager { tasks: serde_json::from_str(&json).unwrap() }
     }
@@ -26,7 +31,8 @@ impl TaskManager {
             id: Uuid::new_v4().to_string(),
             name,
             description,
-            done: false
+            done: false,
+            timestamp: Utc::now()
         });
 
         self.save_tasks();
