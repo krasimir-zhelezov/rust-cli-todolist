@@ -7,8 +7,69 @@ struct Task {
     done: bool
 }
 
+struct TaskManager {
+    tasks: Vec<Task>
+}
+
+impl TaskManager {
+    fn new() -> Self {
+        TaskManager { tasks: Vec::new() }
+    }
+
+    fn add_task(&mut self) {
+        println!("Name: ");
+        let mut name = String::new();
+        io::stdin()
+            .read_line(&mut name)
+            .expect("Failed to read line");
+
+        // let name = name.trim();
+
+        println!("Description: ");
+
+        let mut description = String::new();
+        io::stdin()
+            .read_line(&mut description)
+            .expect("Failed to read line");
+
+        // let description = description.trim();
+
+        self.tasks.push(Task {
+            name: name.trim().to_string(),
+            description: description.trim().to_string(),
+            done: false
+        });
+    }
+
+    fn view_tasks(&self) {
+        println!("{:#?}", self.tasks);
+    }
+
+    fn complete_task(&mut self) {
+        let mut id = String::new();
+        io::stdin()
+            .read_line(&mut id)
+            .expect("Failed to read line");
+
+        let id: usize = id.trim().parse().expect("Not a valid usize");
+        self.tasks[id].done = true;
+    }
+
+    fn delete_task(&mut self) {
+        let mut id = String::new();
+        io::stdin()
+            .read_line(&mut id)
+            .expect("Failed to read line");
+
+        let id: usize = id.trim().parse().expect("Not a valid usize");
+
+        self.tasks.remove(id);
+    }
+}
+
 fn main() {
-    let mut tasks: Vec<Task> = Vec::new();
+    // let mut tasks: Vec<Task> = Vec::new();
+    let mut task_manager = TaskManager::new();
 
     loop {
         let mut input = String::new();
@@ -21,66 +82,11 @@ fn main() {
 
         match input {
             "exit" => break,
-            "add" => tasks.push(add_task()),
-            "view" => println!("{:#?}", tasks),
-            "delete" => delete_task(tasks.as_mut()),
-            "complete" => complete_task(tasks.as_mut()),
+            "add" => task_manager.add_task(),
+            "view" => task_manager.view_tasks(),
+            "delete" => task_manager.delete_task(),
+            "complete" => task_manager.complete_task(),
             _ => println!("Uknown command"),
         }
     }
-}
-
-fn add_task() -> Task {
-    println!("Name: ");
-    let mut name = String::new();
-    io::stdin()
-        .read_line(&mut name)
-        .expect("Failed to read line");
-
-    let name = name.trim();
-
-    println!("Description: ");
-
-    let mut description = String::new();
-    io::stdin()
-        .read_line(&mut description)
-        .expect("Failed to read line");
-
-    let description = description.trim();
-
-    Task {
-        name: name.to_string(),
-        description: description.to_string(),
-        done: false
-    }
-}
-
-// fn view_tasks(tasks: &mut Vec<HashMap<String, String>>) {
-//     for (i, task) in tasks.iter().enumerate() {
-//         println!("----- TASK #{} -----", i);
-//         println!("name: {}", task.get("name").unwrap());
-//         println!("description: {}", task.get("desc").unwrap());
-//         println!("done: {}", task.get("done").unwrap());
-//     }
-// }
-
-fn delete_task(tasks: &mut Vec<Task>) {
-    let mut id = String::new();
-    io::stdin()
-        .read_line(&mut id)
-        .expect("Failed to read line");
-
-    let id: usize = id.trim().parse().expect("Not a valid usize");
-
-    tasks.remove(id);
-}
-
-fn complete_task(tasks: &mut[Task]) {
-    let mut id = String::new();
-    io::stdin()
-        .read_line(&mut id)
-        .expect("Failed to read line");
-
-    let id: usize = id.trim().parse().expect("Not a valid usize");
-    tasks[id].done = true;
 }
