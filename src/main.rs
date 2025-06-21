@@ -2,6 +2,7 @@ use std::{collections::HashMap, io::{self, Read}};
 
 #[derive(Debug)]
 struct Task {
+    id: usize,
     name: String,
     description: String,
     done: bool
@@ -23,8 +24,6 @@ impl TaskManager {
             .read_line(&mut name)
             .expect("Failed to read line");
 
-        // let name = name.trim();
-
         println!("Description: ");
 
         let mut description = String::new();
@@ -32,9 +31,8 @@ impl TaskManager {
             .read_line(&mut description)
             .expect("Failed to read line");
 
-        // let description = description.trim();
-
         self.tasks.push(Task {
+            id: self.tasks.len(),
             name: name.trim().to_string(),
             description: description.trim().to_string(),
             done: false
